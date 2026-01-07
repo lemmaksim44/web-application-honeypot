@@ -1,0 +1,17 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" media="screen" href="{% static 'app/css/about-style.css' %}">
+{% endblock %}
+
+{% block title %}Обратная связь{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <img class="about-img" src="{% static 'app/images/about.png' %}">
+    <div class="about-block">
+        <p>Этот проект представляет собой демонстрационное веб-приложение, созданное для изучения методов взаимодействия пользователей с интерфейсом сайта. Он включает различные страницы с интерактивными элементами и формами обратной связи, а также адаптивный дизайн, обеспечивающий корректное отображение на разных устройствах.</p>
+    </div>
+</div>
+{% endblock %}

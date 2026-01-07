@@ -22,4 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.main_page),
     path('feedback/', views.feedback_page),
+    path('neural/', views.neural_page),
+    path('about/', views.about_page),
 ]
