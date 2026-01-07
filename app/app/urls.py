@@ -24,4 +24,5 @@ urlpatterns = [
     path('feedback/', views.feedback_page),
     path('neural/', views.neural_page),
     path('about/', views.about_page),
+    path('secret/', views.secret_page),
 ]

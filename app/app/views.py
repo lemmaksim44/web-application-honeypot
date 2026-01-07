@@ -28,3 +28,9 @@ def about_page(request):
     context = {}
     rendered_page = template.render(context, request)
     return HttpResponse(rendered_page)
+
+def secret_page(request):
+    template = loader.get_template('secret_page.html')
+    context = {}
+    rendered_page = template.render(context, request)
+    return HttpResponse(rendered_page)
