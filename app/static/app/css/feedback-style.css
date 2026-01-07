@@ -1,0 +1,98 @@
+/* Центрирование формы */
+.feedback-page {
+    width: 100%;
+    height: calc(100vh - 10vh - 5vh);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Основной блок формы */
+.feedback-block {
+    width: min(32vw, 520px);
+    min-width: 300px;
+
+    max-height: 100%;
+
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
+
+    border-radius: 1.5vw;
+    padding: 3vh 2.5vw;
+
+    box-shadow: 0 1vh 4vh rgba(0, 0, 0, 0.25);
+
+    color: #111;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Текст описания */
+.feedback-block p {
+    margin-bottom: 2vh;
+
+    font-size: clamp(13px, 0.9vw, 16px);
+    line-height: 1.4;
+    color: #333;
+}
+
+/* Форма */
+.feedback-block form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6vh;
+}
+
+/* Поля ввода */
+.feedback-block input[type="text"],
+.feedback-block textarea {
+    width: 100%;
+    height: 4vh;
+    margin: 0;
+    padding: 0;
+
+    font-size: clamp(13px, 0.85vw, 15px);
+    font-family: inherit;
+
+    border-radius: 0.8vw;
+    border: 1px solid #ccc;
+    background: #fff;
+
+    outline: none;
+}
+
+/* Текстовое поле */
+.feedback-block textarea {
+    min-height: 12vh;
+    max-height: 18vh;
+    resize: none;
+}
+
+/* Фокус */
+.feedback-block input:focus,
+.feedback-block textarea:focus {
+    border-color: #666;
+}
+
+/* Кнопка */
+.feedback-block button {
+    margin-top: 1.5vh;
+
+    padding: 1.4vh;
+
+    border-radius: 1vw;
+
+    background: #111;
+    color: #fff;
+
+    font-size: clamp(13px, 0.9vw, 15px);
+    cursor: pointer;
+    border: none;
+}
+
+.feedback-block button:hover {
+    background: #333;
+}

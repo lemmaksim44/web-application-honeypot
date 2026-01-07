@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" media="screen" href="{% static 'app/css/background.css' %}">
+    <link rel="stylesheet" media="screen" href="{% static 'app/css/style.css' %}">
+    <link rel="icon" href="{% static 'app/images/itmo.png' %}">
+    <title>{% block title %}{% endblock %}</title>
+    {% block style %}{% endblock %}
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="content-block">
+        <div class="content">
+            <header>
+                <div class="menu">
+                    <a href="/">Главная</a>
+                    <a href="/ai">ИИ</a>
+                    <a href="/feedback">Обратная связь</a>
+                    <a href="/about">О проекте</a>
+                    <a href="/secret">Secret</a>
+                </div>
+            </header>
+
+            <content>
+                {% block content %}
+                {% endblock %}
+            </content>
+        </div>
+
+        <footer>
+            <a>© Лежанков Максим</a>
+        </footer>
+    </div>
+</body>
+<script src="{% static 'app/js/particles.js' %}"></script>
+<script src="{% static 'app/js/app.js' %}"></script>
+</html>

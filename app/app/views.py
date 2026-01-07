@@ -6,3 +6,9 @@ def main_page(request):
     context = {}
     rendered_page = template.render(context, request)
     return HttpResponse(rendered_page)
+
+def feedback_page(request):
+    template = loader.get_template('feedback_page.html')
+    context = {}
+    rendered_page = template.render(context, request)
+    return HttpResponse(rendered_page)
