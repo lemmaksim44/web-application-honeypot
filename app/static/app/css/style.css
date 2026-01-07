@@ -1,0 +1,73 @@
+/* Main */
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #BABABA;
+    cursor: pointer;
+}
+
+.content-block {
+    position: relative;
+    z-index: 1;
+    color: #FFFFFF;
+}
+
+.content {
+    height: calc(100vh - 5vh);
+}
+
+/* Header */
+
+header {
+    font-size: 1.5vw;
+    height: 10vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.menu {
+    width: auto;
+    height: auto;
+    margin-right: 2vw;
+}
+
+.menu > a {
+    margin: 0 0 0 2vw;
+}
+
+/* Content */
+
+content {
+    width: 100vw;
+    height: calc(100vh - 10vh - 5vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+content > h1 {
+    font-size: 15vw;
+    font-weight: bold;
+}
+
+/* Footer */
+
+footer {
+    font-size: 1.2vw;
+    height: 5vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+footer > a {
+    margin: 0;
+    margin-right: 2vw;
+}
