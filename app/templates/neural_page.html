@@ -1,10 +1,35 @@
 {% extends "template.html" %}
+{% load static %}
 
-{% block title %}Главная{% endblock %}
+{% block style %}
+    <link rel="stylesheet" media="screen" href="{% static 'app/css/neural-style.css' %}">
+{% endblock %}
+
+{% block title %}ИИ{% endblock %}
 
 {% block content %}
 <div class="neural-page">
-    <div class="photo-block"></div>
-    <div class="text-block"></div>
+    <div class="photo-block">
+        <div class="first-row">
+            <img class="neural-image" src="{% static 'app/images/1.jpg' %}" alt="Домашний скот">
+            <img class="neural-image" src="{% static 'app/images/2.jpg' %}" alt="Домашний скот">
+        </div>
+        <div class="second-row">
+            <img class="neural-image" src="{% static 'app/images/4.png' %}" alt="Домашний скот">
+            <img class="neural-image" src="{% static 'app/images/3.jpg' %}" alt="Домашний скот">
+        </div>
+        <div class="third-row">
+            <img class="neural-image" src="{% static 'app/images/5.jpg' %}" alt="Домашний скот">
+            <img class="neural-image" src="{% static 'app/images/6.jpg' %}" alt="Домашний скот">
+        </div>
+    </div>
+    <div class="text-block">
+        <div class="first-text">
+            <p>Космос - это безграничное пространство, полное тайн и величественной красоты, которое человечество лишь начинает постигать. В глубине Вселенной рождаются и умирают звёзды, вращаются галактики, а планеты скрывают в себе загадки происхождения жизни. Свет далёких светил летит к нам миллионы лет, напоминая о том, насколько огромен мир за пределами Земли и как мала в нём наша планета. Исследуя космос, люди не только расширяют научные знания, но и учатся по-новому смотреть на себя, осознавая хрупкость и ценность жизни во Вселенной.</p>
+        </div>
+        <div class="second-text">
+            <p>Преломление света водной поверхностью - это оптическое явление, при котором лучи света меняют направление при переходе из воздуха в воду, из-за различия в плотности и скорости распространения света в этих средах. Благодаря этому эффекту предметы под водой кажутся смещёнными, увеличенными или искажёнными, а дно водоёма выглядит ближе, чем есть на самом деле. Колебания поверхности воды, волны и рябь создают постоянно меняющиеся узоры света и тени, делая изображение живым и подвижным. Преломление играет важную роль не только в природе, но и в науке, технике и искусстве, помогая объяснять законы оптики и вдохновляя наблюдателей красотой привычных явлений.</p>
+        </div>
+    </div>
 </div>
 {% endblock %}

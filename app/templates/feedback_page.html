@@ -11,10 +11,11 @@
 <div class="feedback-page">
     <div class="feedback-block">
         <p>Если у вас есть замечания или предложения по работе сайта, вы можете оставить их здесь.</p>
-        <form>
-            <input type="text" placeholder="ФИО" required>
-            <input type="text" placeholder="Email для обратной связи">
-            <textarea placeholder="Ваше предложение..." required></textarea>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="full_name" placeholder="ФИО" required>
+            <input type="email" name="email" placeholder="Email для обратной связи">
+            <textarea name="message" placeholder="Ваше предложение..." required></textarea>
             <button type="submit">Отправить</button>
         </form>
     </div>
