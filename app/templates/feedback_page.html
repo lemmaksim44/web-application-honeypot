@@ -16,8 +16,21 @@
             <input type="text" name="full_name" placeholder="ФИО" required>
             <input type="email" name="email" placeholder="Email для обратной связи">
             <textarea name="message" placeholder="Ваше предложение..." required></textarea>
+            <div class="extra-field">
+                <label>Website</label>
+                <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </div>
+            <div class="extra-field">
+                <label>Comment</label>
+                <textarea name="comment" tabindex="-1"></textarea>
+            </div>
+            <input type="hidden" name="time_on_page" id="time_on_page">
             <button type="submit">Отправить</button>
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block js_script %}
+    <script src="{% static 'app/js/feedback.js' %}"></script>
 {% endblock %}

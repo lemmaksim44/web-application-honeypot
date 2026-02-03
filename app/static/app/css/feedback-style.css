@@ -88,3 +88,10 @@
 .feedback-block button:hover {
     background: #333;
 }
+
+.extra-field {
+    position: absolute;
+    left: -9999px;
+    height: 1px;
+    overflow: hidden;
+}
