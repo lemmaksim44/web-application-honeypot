@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from .models import Submission, TrapEvent
+from django.views.decorators.csrf import csrf_exempt
 
 
 def main_page(request):
     return render(request, 'main_page.html')
 
 
+@csrf_exempt
 def feedback_page(request):
     if request.method == "POST":
         full_name = request.POST.get("full_name")
@@ -31,7 +33,6 @@ def feedback_page(request):
             ip_address=ip,
             forwarded_ip=xff,
             user_agent=user_agent,
-            referer=referer,
             accept_language=accept_language,
             request_method=request.method,
         )
@@ -54,7 +55,7 @@ def feedback_page(request):
             submission=submission,
             trap_type='FAST_SUBMIT',
             triggered=time_on_page < 2,
-            time_on_page=time_on_page
+            value=time_on_page
         )
 
         TrapEvent.objects.create(
@@ -62,6 +63,13 @@ def feedback_page(request):
             trap_type='JS_ENABLED',
             triggered=js_enabled != 1,
             value=js_enabled
+        )
+
+        TrapEvent.objects.create(
+            submission=submission,
+            trap_type='NO_REFERER',
+            triggered=referer is None,
+            value=referer
         )
 
         return redirect("feedback")

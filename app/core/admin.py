@@ -5,7 +5,7 @@ from .models import Submission, TrapEvent
 class TrapEventInline(admin.TabularInline):
     model = TrapEvent
     extra = 0
-    readonly_fields = ('trap_type', 'triggered', 'value', 'time_on_page', 'created_at')
+    readonly_fields = ('trap_type', 'triggered', 'value', 'created_at')
     can_delete = False
 
 
@@ -23,7 +23,7 @@ class SubmissionAdmin(admin.ModelAdmin):
 
 @admin.register(TrapEvent)
 class TrapEventAdmin(admin.ModelAdmin):
-    list_display = ('submission', 'trap_type', 'triggered', 'time_on_page', 'created_at')
+    list_display = ('submission', 'trap_type', 'triggered', 'created_at')
     list_filter = ('trap_type', 'triggered', 'created_at')
     search_fields = ('submission__full_name', 'submission__email', 'submission__ip_address')
-    readonly_fields = ('submission', 'trap_type', 'triggered', 'value', 'time_on_page', 'created_at')
+    readonly_fields = ('submission', 'trap_type', 'triggered', 'value', 'created_at')
