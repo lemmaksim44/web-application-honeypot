@@ -1,3 +1,8 @@
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector('input[name="js_enabled"]').value = 1;
+});
+
+
 document.addEventListener("DOMContentLoaded", function() {
     const startTime = Date.now();
 
@@ -6,4 +11,3 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("time_on_page").value = seconds;
     });
 });
-

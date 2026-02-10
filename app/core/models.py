@@ -28,6 +28,7 @@ class TrapEvent(models.Model):
         ('HONEYPOT_INPUT', 'Скрытое input поле'),
         ('HONEYPOT_TEXTAREA', 'Скрытое textarea поле'),
         ('FAST_SUBMIT', 'Быстрое заполнение формы'),
+        ('JS_ENABLED', 'Проверка на включенный JS'),
     ]
 
     submission = models.ForeignKey(Submission, on_delete=models.CASCADE, related_name='traps', verbose_name="Форма обратной связи")

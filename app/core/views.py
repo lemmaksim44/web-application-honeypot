@@ -11,6 +11,8 @@ def feedback_page(request):
         full_name = request.POST.get("full_name")
         email = request.POST.get("email")
         message = request.POST.get("message")
+
+        js_enabled = int(request.POST.get("js_enabled") or 0)
         time_on_page = int(request.POST.get("time_on_page") or 0)
 
         honeypot_input = request.POST.get("website", "")
@@ -53,6 +55,13 @@ def feedback_page(request):
             trap_type='FAST_SUBMIT',
             triggered=time_on_page < 2,
             time_on_page=time_on_page
+        )
+
+        TrapEvent.objects.create(
+            submission=submission,
+            trap_type='JS_ENABLED',
+            triggered=js_enabled != 1,
+            value=js_enabled
         )
 
         return redirect("feedback")
