@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Submission, TrapEvent
+from .models import Submission, TrapEvent, TrapLink
 from django.views.decorators.csrf import csrf_exempt
+from urllib.parse import urlparse
 
 
 def main_page(request):
@@ -86,4 +87,61 @@ def about_page(request):
 
 
 def secret_page(request):
+
+    trap = request.GET.get("name")
+    trap_type = request.GET.get("type")
+    source = request.GET.get("source")
+    
+
+    if trap and trap_type:
+        TrapLink.objects.create(
+            ip_address=get_client_ip(request),
+            user_agent=request.META.get("HTTP_USER_AGENT", ""),
+            trap_name=trap,
+            trap_category=get_category(trap),
+            trap_type=trap_type,
+            source_page=source,
+            referer=request.META.get("HTTP_REFERER")
+        )
+
     return render(request, 'secret_page.html')
+
+
+def get_category(trap):
+    mapping = {
+        "internal": "debug",
+        "debug": "debug",
+        "trace": "debug",
+        "debug-console": "debug",
+        "test-panel": "debug",
+        "logs": "debug",
+
+        "administrator": "admin",
+        "control-panel": "admin",
+        "admin-dashboard": "admin",
+        "admin": "admin",
+        "admin-panel": "admin",
+        "management": "admin",
+
+        "app-config": "config",
+        "site-settings": "config",
+        "settings": "config",
+        "config": "config",
+        "env": "config",
+        "system-config": "config",
+
+        "archive": "backup",
+        "database-dump": "backup",
+        "backup-old": "backup",
+        "backup": "backup",
+        "db-backup": "backup",
+        "data-dump": "backup",
+    }
+    return mapping.get(trap, "unknown")
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        return x_forwarded_for.split(',')[0]
+    return request.META.get('REMOTE_ADDR')

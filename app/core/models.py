@@ -43,3 +43,21 @@ class TrapEvent(models.Model):
     def __str__(self):
         status = "Сработала" if self.triggered else "Не сработала"
         return f"{self.trap_type} - {status} ({self.submission.ip_address})"
+
+
+class TrapLink(models.Model):
+    ip_address = models.GenericIPAddressField()
+    user_agent = models.TextField()
+    trap_name = models.CharField(max_length=100)
+    trap_category = models.CharField(max_length=50)
+    trap_type = models.CharField(max_length=10)
+    source_page = models.CharField(max_length=100)
+    referer = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Ссылки ловушки"
+        verbose_name_plural = "Ссылки ловушки"
+
+    def __str__(self):
+        return f"{self.ip_address} | {self.trap_category}"
