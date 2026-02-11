@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Submission, TrapEvent, TrapLink
+from .models import Submission, TrapEvent, TrapLink, ScanAttempt
 
 
 class TrapEventInline(admin.TabularInline):
@@ -40,3 +40,12 @@ class TrapLinkAdmin(admin.ModelAdmin):
     def short_user_agent(self, obj):
         return obj.user_agent[:50]
     short_user_agent.short_description = "User Agent"
+
+
+@admin.register(ScanAttempt)
+class ScanAttemptAdmin(admin.ModelAdmin):
+    list_display = ('ip_address', 'requested_path', 'referer', 'created_at')
+    list_filter = ('created_at',)
+    search_fields = ('ip_address', 'requested_path', 'referer')
+    readonly_fields = ('ip_address', 'user_agent', 'requested_path', 'referer', 'created_at')
+    ordering = ('-created_at',)

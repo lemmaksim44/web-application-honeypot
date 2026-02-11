@@ -61,3 +61,18 @@ class TrapLink(models.Model):
 
     def __str__(self):
         return f"{self.ip_address} | {self.trap_category}"
+
+
+class ScanAttempt(models.Model):
+    ip_address = models.GenericIPAddressField()
+    user_agent = models.TextField()
+    requested_path = models.CharField(max_length=255)
+    referer = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Попытка сканирования"
+        verbose_name_plural = "Попытки сканирования"
+
+    def __str__(self):
+        return f"{self.ip_address} | {self.requested_path}"
