@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
             source: "main"
         },
         ".neural-page": {
-            links: ["admin", "admin-panel", "management"],
+            links: ["administrator-panel", "admin-panel", "management"],
             source: "neural"
         },
         ".feedback-page": {

@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Submission, TrapEvent, TrapLink
 from django.views.decorators.csrf import csrf_exempt
-from urllib.parse import urlparse
 
 
 def main_page(request):
@@ -55,7 +54,7 @@ def feedback_page(request):
         TrapEvent.objects.create(
             submission=submission,
             trap_type='FAST_SUBMIT',
-            triggered=time_on_page < 2,
+            triggered=time_on_page <= 2,
             value=time_on_page
         )
 
@@ -119,7 +118,7 @@ def get_category(trap):
         "administrator": "admin",
         "control-panel": "admin",
         "admin-dashboard": "admin",
-        "admin": "admin",
+        "administrator-panel": "admin",
         "admin-panel": "admin",
         "management": "admin",
 

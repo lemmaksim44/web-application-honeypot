@@ -23,7 +23,7 @@ urlpatterns = [
     path('control-panel/', views.secret_page, name='secret'),
     path('admin-dashboard/', views.secret_page, name='secret'),
     # JS
-    path('admin/', views.secret_page, name='secret'),
+    path('administrator-panel/', views.secret_page, name='secret'),
     path('admin-panel/', views.secret_page, name='secret'),
     path('management/', views.secret_page, name='secret'),
 
