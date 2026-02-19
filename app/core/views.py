@@ -179,7 +179,7 @@ def feedback_page_3(request):
         return redirect("feedback-3")
 
     return render(request, "feedback_page_3.html", {
-        "CLOUDFLARE_SITE_PRIVATE_KEY": settings.CLOUDFLARE_SITE_PRIVATE_KEY
+        "CLOUDFLARE_SITE_PRIVATE_KEY": settings.CLOUDFLARE_SITE_PUBLIC_KEY
     })
 
 
