@@ -1,0 +1,55 @@
+.neural-page {
+    width: 100%;
+    height: calc(100vh - 10vh - 5vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10vw;
+}
+
+.photo-block {
+    width: 40vw;
+    height: 54vh;
+}
+
+.neural-image {
+    width: 19vw;
+    height: 18vh;
+    border-radius: 1vw;
+}
+
+.text-block {
+    width: 40vw;
+    height: 54vh;
+    color: #000000;
+    font-size: 0.9vw;
+}
+
+.first-text {
+    width: 100%;
+    height: 25vh;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.first-text > p {
+    margin: 1vw;
+}
+
+.second-text {
+    width: 100%;
+    height: 25vh;
+    margin-top: 4vh;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.second-text > p {
+    margin: 1vw;
+}
