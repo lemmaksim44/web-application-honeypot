@@ -76,3 +76,20 @@ class ScanAttempt(models.Model):
 
     def __str__(self):
         return f"{self.ip_address} | {self.requested_path}"
+
+
+class CaptchaEvent(models.Model):
+    submission = models.ForeignKey(Submission, on_delete=models.CASCADE, related_name='captchas')
+    captcha_type = models.CharField(max_length=50)
+    success = models.BooleanField()
+    time_on_page = models.IntegerField(null=True, blank=True)
+    js_enabled = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "CAPTCHA"
+        verbose_name_plural = "CAPTCHA"
+
+    def __str__(self):
+        status = "Success" if self.success else "Failed"
+        return f"{self.captcha_type} - {status} ({self.submission.ip_address})"

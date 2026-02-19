@@ -3,7 +3,9 @@ from . import views
 
 urlpatterns = [
     path('', views.main_page, name='main'),
-    path('feedback/', views.feedback_page, name='feedback'),
+    path('feedback-1/', views.feedback_page_1, name='feedback-1'),
+    path('feedback-2/', views.feedback_page_2, name='feedback-2'),
+    path('feedback-3/', views.feedback_page_3, name='feedback-3'),
     path('neural/', views.neural_page, name='neural'),
     path('about/', views.about_page, name='about'),
 

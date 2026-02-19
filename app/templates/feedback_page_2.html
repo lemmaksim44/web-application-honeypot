@@ -1,0 +1,31 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" media="screen" href="{% static 'app/css/feedback-style.css' %}">
+{% endblock %}
+
+{% block title %}Обратная связь{% endblock %}
+
+{% block content %}
+<div class="feedback-page">
+    <div class="feedback-block">
+        <p>Если у вас есть замечания или предложения по работе сайта, вы можете оставить их здесь.</p>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="full_name" placeholder="ФИО" required>
+            <input type="email" name="email" placeholder="Email для обратной связи">
+            <textarea name="message" placeholder="Ваше предложение..." required></textarea>
+            <input type="hidden" name="time_on_page" id="time_on_page">
+            <input type="hidden" name="js_enabled" value="0">
+            <div class="g-recaptcha" data-sitekey="{{ GOOGLE_SITE_PUBLIC_KEY }}"></div>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_script %}
+    <script src="{% static 'app/js/feedback.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}

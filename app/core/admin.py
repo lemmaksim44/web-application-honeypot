@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Submission, TrapEvent, TrapLink, ScanAttempt
+from .models import Submission, TrapEvent, TrapLink, ScanAttempt, CaptchaEvent
 
 
 class TrapEventInline(admin.TabularInline):
@@ -49,3 +49,12 @@ class ScanAttemptAdmin(admin.ModelAdmin):
     search_fields = ('ip_address', 'requested_path', 'referer')
     readonly_fields = ('ip_address', 'user_agent', 'requested_path', 'referer', 'created_at')
     ordering = ('-created_at',)
+
+
+@admin.register(CaptchaEvent)
+class CaptchaEventAdmin(admin.ModelAdmin):
+    list_display = ("submission", "captcha_type", "success", "time_on_page", "js_enabled", "created_at")
+    list_filter = ("captcha_type", "success", "js_enabled", "created_at")
+    search_fields = ("submission__full_name", "submission__email", "submission__ip_address")
+    readonly_fields = ("created_at",)
+    ordering = ("-created_at",)

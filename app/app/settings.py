@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,3 +126,15 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, "static"),
 ]
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+GOOGLE_SITE_PUBLIC_KEY = env('GOOGLE_SITE_PUBLIC_KEY')
+GOOGLE_SITE_PRIVATE_KEY = env('GOOGLE_SITE_PRIVATE_KEY')
+
+CLOUDFLARE_SITE_PUBLIC_KEY = env('CLOUDFLARE_SITE_PUBLIC_KEY')
+CLOUDFLARE_SITE_PRIVATE_KEY = env('CLOUDFLARE_SITE_PRIVATE_KEY')

@@ -1,5 +1,7 @@
+import requests
 from django.shortcuts import render, redirect
-from .models import Submission, TrapEvent, TrapLink
+from django.conf import settings
+from .models import Submission, TrapEvent, TrapLink, CaptchaEvent
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -8,7 +10,7 @@ def main_page(request):
 
 
 @csrf_exempt
-def feedback_page(request):
+def feedback_page_1(request):
     if request.method == "POST":
         full_name = request.POST.get("full_name")
         email = request.POST.get("email")
@@ -72,9 +74,113 @@ def feedback_page(request):
             value=referer
         )
 
-        return redirect("feedback")
+        return redirect("feedback-1")
 
-    return render(request, "feedback_page.html")
+    return render(request, "feedback_page_1.html")
+
+
+@csrf_exempt
+def feedback_page_2(request):
+    if request.method == "POST":
+        full_name = request.POST.get("full_name")
+        email = request.POST.get("email")
+        message = request.POST.get("message")
+        time_on_page = int(request.POST.get("time_on_page") or 0)
+        js_enabled = int(request.POST.get("js_enabled") or 0)
+
+        ip = get_client_ip(request)
+        user_agent = request.META.get("HTTP_USER_AGENT", "")
+        accept_language = request.META.get("HTTP_ACCEPT_LANGUAGE")
+
+        captcha_token = request.POST.get("g-recaptcha-response")
+        captcha_success = False
+        if captcha_token:
+            url = "https://www.google.com/recaptcha/api/siteverify"
+            payload = {
+                "secret": settings.GOOGLE_SITE_PRIVATE_KEY,
+                "response": captcha_token
+            }
+            resp = requests.post(url, data=payload)
+            result = resp.json()
+            captcha_success = result.get("success", False)
+
+        submission = Submission.objects.create(
+            full_name=full_name,
+            email=email,
+            message=message,
+            ip_address=ip,
+            forwarded_ip=request.META.get("HTTP_X_FORWARDED_FOR"),
+            user_agent=user_agent,
+            accept_language=accept_language,
+            request_method=request.method,
+        )
+
+        from .models import CaptchaEvent
+        CaptchaEvent.objects.create(
+            submission=submission,
+            captcha_type="google",
+            success=captcha_success,
+            time_on_page=time_on_page,
+            js_enabled=True if js_enabled == 1 else False
+        )
+
+        return redirect("feedback-2")
+
+    return render(request, "feedback_page_2.html", {
+        "GOOGLE_SITE_PUBLIC_KEY": settings.GOOGLE_SITE_PUBLIC_KEY
+    })
+
+
+@csrf_exempt
+def feedback_page_3(request):
+    if request.method == "POST":
+        full_name = request.POST.get("full_name")
+        email = request.POST.get("email")
+        message = request.POST.get("message")
+        time_on_page = int(request.POST.get("time_on_page") or 0)
+        js_enabled = int(request.POST.get("js_enabled") or 0)
+
+        ip = get_client_ip(request)
+        user_agent = request.META.get("HTTP_USER_AGENT", "")
+        accept_language = request.META.get("HTTP_ACCEPT_LANGUAGE")
+
+        token = request.POST.get("cf-turnstile-response")
+        success = False
+        if token:
+            url = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
+            payload = {
+                "secret": settings.CLOUDFLARE_SITE_PRIVATE_KEY,
+                "response": token,
+                "remoteip": ip
+            }
+            resp = requests.post(url, data=payload)
+            result = resp.json()
+            success = result.get("success", False)
+
+        submission = Submission.objects.create(
+            full_name=full_name,
+            email=email,
+            message=message,
+            ip_address=ip,
+            forwarded_ip=request.META.get("HTTP_X_FORWARDED_FOR"),
+            user_agent=user_agent,
+            accept_language=accept_language,
+            request_method=request.method,
+        )
+
+        CaptchaEvent.objects.create(
+            submission=submission,
+            captcha_type="cloudflare",
+            success=success,
+            time_on_page=time_on_page,
+            js_enabled=js_enabled != 0
+        )
+
+        return redirect("feedback-3")
+
+    return render(request, "feedback_page_3.html", {
+        "CLOUDFLARE_SITE_PRIVATE_KEY": settings.CLOUDFLARE_SITE_PRIVATE_KEY
+    })
 
 
 def neural_page(request):
