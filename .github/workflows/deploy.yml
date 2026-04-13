@@ -10,16 +10,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: Create .env file from GitHub Secrets
         run: |
-          cat > .env << EOF
-          DJANGO_KEY=${{ secrets.DJANGO_KEY }}
-          GOOGLE_SITE_PUBLIC_KEY=${{ secrets.GOOGLE_SITE_PUBLIC_KEY }}
-          GOOGLE_SITE_PRIVATE_KEY=${{ secrets.GOOGLE_SITE_PRIVATE_KEY }}
-          CLOUDFLARE_SITE_PUBLIC_KEY=${{ secrets.CLOUDFLARE_SITE_PUBLIC_KEY }}
-          CLOUDFLARE_SITE_PRIVATE_KEY=${{ secrets.CLOUDFLARE_SITE_PRIVATE_KEY }}
-          EOF
+          cd app
+          rm .env
+          touch .env
+          echo "DJANGO_KEY=${{ secrets.DJANGO_KEY }}" >> .env
+          echo "GOOGLE_SITE_PUBLIC_KEY=${{ secrets.GOOGLE_SITE_PUBLIC_KEY }}" >> .env
+          echo "GOOGLE_SITE_PRIVATE_KEY=${{ secrets.GOOGLE_SITE_PRIVATE_KEY }}" >> .env
+          echo "CLOUDFLARE_SITE_PUBLIC_KEY=${{ secrets.CLOUDFLARE_SITE_PUBLIC_KEY }}" >> .env
+          echo "CLOUDFLARE_SITE_PRIVATE_KEY=${{ secrets.CLOUDFLARE_SITE_PRIVATE_KEY }}" >> .env
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
