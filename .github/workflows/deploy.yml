@@ -4,60 +4,10 @@ on:
     branches: [ main ]
 
 jobs:
-  database:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      
-      - name: Apply admin_honeypot patch
-        run: |
-          cp -r admin_honeypot/ /usr/local/lib/python3.12/site-packages/admin_honeypot/
-
-      - name: Run migrations
-        run: |
-          cd app
-          python manage.py migrate
-        env:
-          DJANGO_KEY: ${{ secrets.DJANGO_KEY }}
-      
-      - name: Create superuser (если не существует)
-        run: |
-          cd app
-          python manage.py createsuperuser --no-input || echo "Superuser already exists or creation skipped"
-        env:
-          DJANGO_SUPERUSER_USERNAME: ${{ secrets.ADMIN_USERNAME }}
-          DJANGO_SUPERUSER_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          DJANGO_SUPERUSER_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-
-      - name: Upload project files
-        uses: actions/upload-artifact@v4
-        with:
-          name: django-project
-          path: .
-          retention-days: 1
-
   docker-build:
-    needs: database
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download project from previous job
-        uses: actions/download-artifact@v4
-        with:
-          name: django-project
-
       - name: Create .env file from GitHub Secrets
         run: |
           cat > .env << EOF
@@ -66,6 +16,7 @@ jobs:
           GOOGLE_SITE_PRIVATE_KEY=${{ secrets.GOOGLE_SITE_PRIVATE_KEY }}
           CLOUDFLARE_SITE_PUBLIC_KEY=${{ secrets.CLOUDFLARE_SITE_PUBLIC_KEY }}
           CLOUDFLARE_SITE_PRIVATE_KEY=${{ secrets.CLOUDFLARE_SITE_PRIVATE_KEY }}
+          EOF
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
