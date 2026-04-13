@@ -40,3 +40,25 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
   
+
+  deploy:
+    needs: docker-build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/experiment-ci-cd:latest
+
+            docker stop app || true
+            docker rm app || true
+
+            docker run -d \
+              --name app \
+              -p 8000:8000 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/experiment-ci-cd:latest
