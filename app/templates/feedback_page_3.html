@@ -18,7 +18,7 @@
             <textarea name="message" placeholder="Ваше предложение..." required></textarea>
             <input type="hidden" name="time_on_page" id="time_on_page">
             <input type="hidden" name="js_enabled" value="0">
-            <div class="cf-turnstile" data-sitekey="{{ CLOUDFLARE_SITE_PRIVATE_KEY }}"></div>
+            <div id="cf-turnstile" class="cf-turnstile" data-sitekey="{{ CLOUDFLARE_SITE_PRIVATE_KEY }}"></div>
             <button type="submit">Отправить</button>
         </form>
     </div>
